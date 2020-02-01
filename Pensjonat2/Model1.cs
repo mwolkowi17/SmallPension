@@ -18,5 +18,6 @@ namespace Pensjonat2
         }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Guest> Guests { get; set; }
+        public DbSet<Reservations> Reservations_List { get; set; }
     }
 }

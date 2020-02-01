@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pensjonat_ado", "Pensjonat_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pensjonat2", "Pensjonat2\Pensjonat2.csproj", "{FF8588EA-1CF4-441C-8521-5DF4A2C52FBC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmallHotelWPF", "SmallHotelWPF\SmallHotelWPF.csproj", "{C4C26FEA-AFA3-4772-92BF-AEBDAC583434}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{FF8588EA-1CF4-441C-8521-5DF4A2C52FBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF8588EA-1CF4-441C-8521-5DF4A2C52FBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF8588EA-1CF4-441C-8521-5DF4A2C52FBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4C26FEA-AFA3-4772-92BF-AEBDAC583434}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4C26FEA-AFA3-4772-92BF-AEBDAC583434}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4C26FEA-AFA3-4772-92BF-AEBDAC583434}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4C26FEA-AFA3-4772-92BF-AEBDAC583434}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

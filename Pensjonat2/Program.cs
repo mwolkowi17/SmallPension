@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace Pensjonat2
 {
 
-    enum RoomType
+    public enum RoomType
     {
         single, doublebed, threebed
     }
-    class Room
+   public class Room
     {
         public int RoomID { get; set; }
         public int Number { get; set; }
@@ -38,7 +38,7 @@ namespace Pensjonat2
 
     }
 
-    class Hotel
+    public class Hotel
     {
         public static List<Room> rooms = new List<Room>();
         public static List<Guest> guests = new List<Guest>();
@@ -50,7 +50,7 @@ namespace Pensjonat2
         }
     }
 
-    class Guest
+    public class Guest
     {
         public int GuestID { get; set; }
         public string Name { get; set; }
@@ -92,15 +92,15 @@ namespace Pensjonat2
 
     }
 
-    class Reservations
+    public class Reservations
     {
-
-        public Room Reserved_Room;
-        public Guest Reservation_Owner;
+        public int ReservationsID { get; set; }
+        public int Room_Nr { get; set; }
+        public string Reservation_Owner { get; set; }
         // public DateTime ArrivalTime; tu warto ustalić to jako int a dopiero w konstruktorze dodać Sytem.DateTime.Month etc
         // public DateTime DepartureTime;
-        public bool IsParkingNeed;
-        public Breakfest Reservation_Breakfest = new Breakfest();
+        public bool IsParkingNeed { get; set; }
+        public bool IsEngilshBreakfest { get; set; }
 
 
 
@@ -108,109 +108,7 @@ namespace Pensjonat2
 
     }
 
-    class ReservationBook
-    {
-        public List<Reservations> reservation_list = new List<Reservations>();
-
-        public void Make_Reservation(string name, string surname, string nationality, bool supercardowner, int creditcardnumber, RoomType type)
-        {
-            using (Model1 context = new Model1())
-            {
-                Guest guest = new Guest(name, surname, nationality, supercardowner, creditcardnumber);
-                Hotel.rooms = context.Rooms.ToList();
-                List<Room> robocza = (from Room item in Hotel.rooms
-                                      where item.Type == type
-                                      select item).ToList();
-                Room roboczyPokoj = (from Room item in robocza
-                                     where item.Ifoccupied == false
-                                     select item).First();
-                Reservations reservation = new Reservations();
-
-                reservation.Reservation_Owner = guest;
-                reservation.Reserved_Room = roboczyPokoj;
-                roboczyPokoj.Ifoccupied = true;
-
-
-                context.Guests.Add(guest);
-                Hotel.guests = context.Guests.ToList();
-                guest.NrofRoom = roboczyPokoj.Number;
-                context.SaveChanges();
-
-                reservation_list.Add(reservation);
-                guest.history_of_resrvations.Enqueue(roboczyPokoj);
-                Console.WriteLine("Rezerwacja zrobiona dla: " + guest.Name + " " + guest.Surname);
-            }
-        }
-
-        public void Cancel_Reservation(string name, string surname)
-        {
-            using (Model1 context = new Model1())
-            {
-               /* Reservations robocza = (from Reservations item in reservation_list
-                                        where item.Reservation_Owner.Surname == surname && item.Reservation_Owner.Name == name
-                                        select item).First();
-                reservation_list.Remove(robocza);
-                robocza.Reserved_Room.Ifoccupied = false;*/
-               
-                Guest roboczygosc = (from Guest item in context.Guests.ToList()
-                                           where item.Surname == surname && item.Name==name
-                                           select item).First();
-                
-
-                //Hotel.rooms = context.Rooms.ToList();
-                Room roboczy = (from Room item in context.Rooms.ToList()
-                                where item.Number == roboczygosc.NrofRoom
-                                select item).First();
-                roboczy.Ifoccupied = false;
-                roboczygosc.NrofRoom = 0;
-
-                context.SaveChanges();
-                Console.WriteLine("Reservation of " + name + " " + surname + " is canceled.");
-            }
-        }
-
-        public void Add_Breakfest(int number, bool isenglish)
-        {
-            Reservations robocza = new Reservations();
-            robocza = (from Reservations item in reservation_list
-                       where item.Reserved_Room.Number == number
-                       select item).First();
-
-            if (isenglish == true)
-            {
-                robocza.Reservation_Breakfest.IsEnglish = true;
-            }
-            else
-            {
-                robocza.Reservation_Breakfest.IsContinental = true;
-            }
-        }
-
-        public void Add_Discount(int number)
-        {
-            Reservations robocza = (from Reservations item in reservation_list
-                                    where item.Reserved_Room.Number == number
-                                    select item).First();
-
-            robocza.Reserved_Room.Price = robocza.Reserved_Room.Price - 0.2 * robocza.Reserved_Room.Price;
-        }
-
-        public void Show_Reservations()
-        {
-            foreach (var n in reservation_list)
-            {
-                Console.WriteLine(n.Reservation_Owner.Surname + " " + n.Reservation_Owner.Name + "Nr pokoju: " + n.Reserved_Room.Number + " " + n.Reserved_Room.Type);
-            }
-        }
-
-        public void Display_Details_of_Reservation(string surname)
-        {
-            var roboczy = (from Reservations item in reservation_list
-                           where item.Reservation_Owner.Surname == surname
-                           select item).First();
-            Console.WriteLine(roboczy.Reservation_Owner.Surname + " " + roboczy.Reservation_Owner.Name + " Numer pokoju:  " + roboczy.Reserved_Room.Number);
-        }
-    }
+   
 
     class Breakfest
     {
@@ -250,12 +148,12 @@ namespace Pensjonat2
 
                 ReservationBook book = new ReservationBook();
 
-                //book.Make_Reservation("Łucja", "Wołkowicz", "Polish", false, 1244, RoomType.doublebed);
-                //book.Make_Reservation("Milosz", "Kowalski", "Polish", false, 31131, RoomType.single);
-                book.Show_Reservations();
-                //book.Display_Details_of_Reservation("Kowalski");
+               // book.Make_Reservation("Iwona", "Wołkowicz", "Polish", false, 1244, RoomType.doublebed);
+               book.Make_Reservation("Maria", "Gruber", "Polish", false, 3113431, RoomType.doublebed);
+
+                //book.Display_Details_of_Reservation("Pawlak");
                 //book.Add_Breakfest(1, true);
-                book.Cancel_Reservation("Milosz", "Kowalski");
+              //book.Cancel_Reservation("Maria", "Gruber");
 
                 Console.ReadKey();
             }
